@@ -24,44 +24,51 @@ app.post('/api/lead', async (req, res) => {
             insta
         });
 
-        // ENVIO PRO KOMMO
-        const response = await axios.post(
-            `https://${process.env.KOMMO_SUBDOMAIN}.kommo.com/api/v4/leads/complex`,
-            [
-                {
-                    name: `Lead - ${name}`,
+        const payload = [
+            {
+                name: `Lead - ${name}`,
 
-                    custom_fields_values: [
+                _embedded: {
+                    contacts: [
                         {
-                            field_id: Number(process.env.KOMMO_INSTAGRAM_FIELD_ID),
-                            values: [
+                            first_name: name,
+
+                            custom_fields_values: [
+
+                                // TELEFONE
                                 {
-                                    value: insta
+                                    field_code: 'PHONE',
+                                    values: [
+                                        {
+                                            value: whats
+                                        }
+                                    ]
+                                },
+
+                                // INSTAGRAM
+                                {
+                                    field_id: Number(process.env.KOMMO_INSTAGRAM_FIELD_ID),
+                                    values: [
+                                        {
+                                            value: insta
+                                        }
+                                    ]
                                 }
+
                             ]
                         }
-                    ],
-
-                    _embedded: {
-                        contacts: [
-                            {
-                                first_name: name,
-
-                                custom_fields_values: [
-                                    {
-                                        field_code: 'PHONE',
-                                        values: [
-                                            {
-                                                value: whats
-                                            }
-                                        ]
-                                    }
-                                ]
-                            }
-                        ]
-                    }
+                    ]
                 }
-            ],
+            }
+        ];
+
+        console.log(
+            JSON.stringify(payload, null, 2)
+        );
+
+        const response = await axios.post(
+            `https://${process.env.KOMMO_SUBDOMAIN}.kommo.com/api/v4/leads/complex`,
+            payload,
             {
                 headers: {
                     Authorization: `Bearer ${process.env.KOMMO_TOKEN}`,
@@ -69,6 +76,8 @@ app.post('/api/lead', async (req, res) => {
                 }
             }
         );
+
+        console.log('Resposta Kommo:', response.data);
 
         res.json({
             success: true,
@@ -78,11 +87,13 @@ app.post('/api/lead', async (req, res) => {
     } catch (error) {
 
         console.log(
+            'ERRO KOMMO:',
             error.response?.data || error.message
         );
 
         res.status(500).json({
-            success: false
+            success: false,
+            error: error.response?.data || error.message
         });
     }
 });
