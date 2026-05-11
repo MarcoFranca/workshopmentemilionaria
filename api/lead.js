@@ -8,23 +8,9 @@ module.exports = async function handler(req, res) {
     try {
         const { name, whats, insta } = req.body;
 
-        const instagramFieldId = 1888772;
-
         const payload = [
             {
                 name: `Lead - ${name}`,
-
-                // CASO O CAMPO INSTAGRAM SEJA DE LEAD
-                custom_fields_values: [
-                    {
-                        field_id: instagramFieldId,
-                        values: [
-                            {
-                                value: insta
-                            }
-                        ]
-                    }
-                ],
 
                 _embedded: {
                     contacts: [
@@ -40,13 +26,11 @@ module.exports = async function handler(req, res) {
                                         }
                                     ]
                                 },
-
-                                // CASO O CAMPO INSTAGRAM SEJA DE CONTATO
                                 {
-                                    field_id: instagramFieldId,
+                                    field_id: 1888772,
                                     values: [
                                         {
-                                            value: insta
+                                            value: insta.startsWith('@') ? insta : `@${insta}`
                                         }
                                     ]
                                 }
