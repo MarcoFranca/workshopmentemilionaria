@@ -31,6 +31,17 @@ app.post('/api/lead', async (req, res) => {
                 {
                     name: `Lead - ${name}`,
 
+                    custom_fields_values: [
+                        {
+                            field_id: Number(process.env.KOMMO_INSTAGRAM_FIELD_ID),
+                            values: [
+                                {
+                                    value: insta
+                                }
+                            ]
+                        }
+                    ],
+
                     _embedded: {
                         contacts: [
                             {
