@@ -930,15 +930,15 @@ footer .footer-inner { max-width: 1180px; margin: 0 auto; display: flex; flex-wr
 @media (max-width: 768px) {
     nav.top { padding: 14px 16px; }
     .nav-cta { padding: 8px 12px; font-size: 10px; }
-    .hero { padding: 110px 0 60px; }
+    .hero { padding: 0 0 60px; }
     .hero-content { grid-template-columns: 1fr; gap: 24px; min-height: auto; }
     .hero-text { text-align: center; align-items: center; }
     .hero-meta-top { justify-content: center; gap: 14px; }
     .hero-meta-top .item { font-size: 14px; }
     .hero-text .hero-sub { margin: 0 auto 0; max-width: 100%; }
     .hero-cta-block { align-items: center; margin-top: 28px; }
-    .hero-portrait { order: -1; max-width: 280px; margin: 0 auto; justify-self: center; align-self: center; }
-    .hero-portrait img { max-height: 360px; -webkit-mask-image: radial-gradient(ellipse 80% 90% at 50% 35%, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 100%); mask-image: radial-gradient(ellipse 80% 90% at 50% 35%, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 100%); }
+    .hero-portrait { order: -1; max-width: none; width: calc(100% + 48px); margin: 0 -24px; justify-self: stretch; align-self: stretch; }
+    .hero-portrait img { max-height: 500px; width: 100%; object-fit: cover; object-position: center top; -webkit-mask-image: linear-gradient(to bottom, black 45%, rgba(0,0,0,0.5) 75%, transparent 100%); mask-image: linear-gradient(to bottom, black 45%, rgba(0,0,0,0.5) 75%, transparent 100%); -webkit-mask-composite: source-over; mask-composite: add; }
     h1.hero-title { font-size: clamp(40px, 12vw, 72px); }
     .event-strip { flex-direction: column; }
     .event-cell { border-right: none; border-bottom: 1px solid var(--border); padding: 14px; }
